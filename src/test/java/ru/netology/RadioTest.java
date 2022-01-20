@@ -2,7 +2,7 @@ package ru.netology;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RadioTest {
     @Test
@@ -16,10 +16,62 @@ class RadioTest {
     }
 
     @Test
+    void shouldSetCurrentStationToUserArgument() {
+        Radio radio = new Radio(111);
+
+        int expected = 111;
+        int actual = radio.getStationsCount();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSetCurrentStationToDefault() {
+        Radio radio = new Radio(10);
+
+        int expected = 10;
+        int actual = radio.getStationsCount();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSetMaxVolumeToDefault() {
+        Radio radio = new Radio();
+
+        int expected = 100;
+        int actual = radio.getMaxVolume();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void shouldSetCurrentStationWhenStationGraterThenMaxAllowed() {
         Radio radio = new Radio();
 
         radio.setCurrentStation(10);
+        int expected = 0;
+        int actual = radio.getCurrentStation();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSetCurrentStationWhenStationGraterThenUserMaxAllowedPositiveCase() {
+        Radio radio = new Radio(50);
+
+        radio.setCurrentStation(10);
+        int expected = 10;
+        int actual = radio.getCurrentStation();
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSetCurrentStationWhenStationGraterThenUserMaxAllowedNegativeCase() {
+        Radio radio = new Radio(50);
+
+        radio.setCurrentStation(50);
         int expected = 0;
         int actual = radio.getCurrentStation();
 
@@ -118,6 +170,7 @@ class RadioTest {
 
         assertEquals(expected, actual);
     }
+
     @Test
     void shouldSwithToPreviousStationValidValue() {
         Radio radio = new Radio();
@@ -166,6 +219,8 @@ class RadioTest {
         assertEquals(expected, actual);
     }
 
+    ////////////////////////////////////////////////////////////////
+
 
     @Test
     void shouldSetCurrentVolumeWhenVolumeGraterThenMaxAllowed() {
@@ -179,10 +234,10 @@ class RadioTest {
     }
 
     @Test
-    void shouldSetCurrentVolumeWhenVolumeAllowed() {
+    void shouldNotSetCurrentVolumeWhenVolumeIsNotAllowed() {
         Radio radio = new Radio();
 
-        radio.setCurrentVolume(11);
+        radio.setCurrentVolume(101);
         int expected = 0;
         int actual = radio.getCurrentVolume();
 
@@ -200,6 +255,7 @@ class RadioTest {
         assertEquals(expected, actual);
 
     }
+
     @Test
     void shouldSetCurrentVolume() {
         Radio radio = new Radio();
@@ -225,10 +281,10 @@ class RadioTest {
     @Test
     void shouldIncreaseVolume() {
         Radio radio = new Radio();
-        radio.setCurrentVolume(10);
+        radio.setCurrentVolume(100);
 
         radio.increaseVolume();
-        int expected = 0;
+        int expected = 100;
         int actual = radio.getCurrentVolume();
 
         assertEquals(expected, actual);
@@ -245,6 +301,7 @@ class RadioTest {
 
         assertEquals(expected, actual);
     }
+
     @Test
     void shouldIncreaseVolumeWhenValueIsValid() {
         Radio radio = new Radio();
@@ -273,10 +330,10 @@ class RadioTest {
     @Test
     void shouldReduceVolume() {
         Radio radio = new Radio();
-        radio.setCurrentVolume(0);
+        radio.setCurrentVolume(5);
 
         radio.reduceVolume();
-        int expected = 10;
+        int expected = 4;
         int actual = radio.getCurrentVolume();
 
         assertEquals(expected, actual);
@@ -312,7 +369,7 @@ class RadioTest {
         radio.setCurrentVolume(0);
 
         radio.reduceVolume();
-        int expected = 10;
+        int expected = 0;
         int actual = radio.getCurrentVolume();
 
         assertEquals(expected, actual);
